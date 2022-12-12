@@ -10,7 +10,7 @@
         outlined
         v-model="email"
       ></v-text-field>
-      <v-btn outlined click min-height="50" @click="submit"> Subscribe</v-btn>
+      <v-btn outlined click min-height="50" width="400" @click="submit"> Subscribe</v-btn>
     </v-sheet>
   </v-card>
 </template>
@@ -24,7 +24,8 @@ export default {
   },
   methods: {
     async submit() {
-      await this.$swal({
+      if(this.email !== ''){
+        await this.$swal({
         title: "Thank you for subscribing",
         icon: "success",
         allowOutsideclick: false,
@@ -34,6 +35,8 @@ export default {
         text: "You will be notified when we have a deal or items on sale.",
         showConfirmButton: false,
       });
+      }
+      
     },
   },
 };
