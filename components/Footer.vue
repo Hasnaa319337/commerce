@@ -1,5 +1,5 @@
 <template>
-  <v-card tile falt class="text-center pa-md-10 pa-5" color="surface">
+  <v-card tile falt class="text-center pa-md-10 pa-5" color="surface" >
     <h2 class="text-md-h6 font-weight-blod pointer">FreeCommerce</h2>
     <div class="text-center">
       <v-btn

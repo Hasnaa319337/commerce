@@ -29,9 +29,14 @@
         </v-col>
         <v-col md="9">
           <v-row>
-            <template v-for="(p, index) in filterProducts">
-              <v-col cols="12" md="6" :key="index">
-                <v-card link color="surface" class="el ma-2 mb-5 mr-5">
+            <template v-for="(p, i) in filterProducts">
+              <v-col cols="12" md="6" :key="`product${p.id}-${i}`">
+                <v-card
+                  nuxt
+                  :to="`/products/${p.id}`"
+                  color="surface"
+                  class="el ma-2 mb-5 mr-5"
+                >
                   <v-img :src="p.image" height="300">
                     <template #placeholder>
                       <v-row
@@ -52,7 +57,7 @@
                     p.name
                   }}</v-card-title>
                   <v-card-subtitle class="primary--text pb-3">
-                    {{ p.price }}
+                    {{ $formatMoney(p.price) }}
                   </v-card-subtitle>
                   <v-card-text>
                     <v-chip
@@ -73,6 +78,7 @@
         </v-col>
       </v-row>
     </v-container>
+    <Footer />
     <ScrollTopButton />
   </div>
 </template>
@@ -84,26 +90,31 @@ export default {
     return {
       products: null,
       category: null,
-      search:null,
+      search: null,
     };
   },
   async created() {
     this.products = await this.$content("products").fetch();
     this.category = await this.$content("category").fetch();
   },
-  computed:{
-    filterProducts(){
-        if(!this.search || !this.products) return this.products || [];
-        return this.products.filter((p)=>{
-            const s =this.search.toLowerCase();
-            const n = p.name.toLowerCase();
-            const price = p.price.toString();
-            const salePrice = p.salePrice ?.toString() || '';
-            const r = p.ratings.toString()
+  computed: {
+    filterProducts() {
+      if (!this.search || !this.products) return this.products || [];
+      return this.products.filter((p) => {
+        const s = this.search.toLowerCase();
+        const n = p.name.toLowerCase();
+        const price = p.price.toString();
+        const salePrice = p.salePrice?.toString() || "";
+        const r = p.ratings.toString();
 
-            return n.includes(s) || price.includes(s) || salePrice.includes(s) || r.includes(s)
-        })
-    }
+        return (
+          n.includes(s) ||
+          price.includes(s) ||
+          salePrice.includes(s) ||
+          r.includes(s)
+        );
+      });
+    },
   },
 };
 </script>

@@ -1,7 +1,13 @@
 <template>
   <v-slide-group>
     <v-slide-item v-for="(p, i) in products" :key="i">
-      <v-card link color="surface" width="300" class="el ma-2 mb-5 mr-5">
+      <v-card
+        nuxt
+        :to="`/products/${p.id}`"
+        color="surface"
+        width="300"
+        class="el ma-2 mb-5 mr-5"
+      >
         <v-img height="300" :src="p.image">
           <template #placeholder>
             <v-row class="fill-height" justify="center" align="center">
@@ -18,12 +24,18 @@
           p.name
         }}</v-card-title>
         <v-card-subtitle class="primary--text pb-3">
-          {{ p.price }}
+          {{ $formatMoney(p.price) }}
         </v-card-subtitle>
         <v-card-text>
-          <v-chip x-small label outlined class="mr-1" v-for="(tag,i) in p.tags" :key="i">
-             {{tag}} 
-
+          <v-chip
+            x-small
+            label
+            outlined
+            class="mr-1"
+            v-for="(tag, i) in p.tags"
+            :key="i"
+          >
+            {{ tag }}
           </v-chip>
         </v-card-text>
       </v-card>
